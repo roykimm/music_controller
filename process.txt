@@ -1,0 +1,28 @@
+vs code extension
+1. prettier
+2. python
+3. django
+4. es7
+5. JavaScript (ES6) code snippets
+
+pip install django djangorestframework
+django-admin startproject music_controller
+django-admin startapp api
+python manage.py makemigrations
+python manage.py migrate
+
+
+django-admin startapp frontend
+cd frontend
+폴더 만들기 
+src -> components
+static -> css, frontend, images
+templates
+npm init -y
+npm i webpack webpack-cli --save-dev
+npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+npm i react react-dom --save-dev
+npm i @material-ui/core
+npm i @babel/plugin-proposal-class-properties
+npm i react-router-dom
+npm i @material-ui/icons
