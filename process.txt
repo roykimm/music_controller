@@ -1,3 +1,5 @@
+follow Django & React - Full Stack Web App Tutorial in youtube
+
 vs code extension
 1. prettier
 2. python
