@@ -1,26 +1,81 @@
-class CreateRoomView(APIView):
-    serializer_class = CreateRoomSerializer
+import React, { Component } from "react";
+import { Grid, Button, Typography } from "@material-ui/core";
 
-    def post(self, request, format=None):
-        if not self.request.session.exists(self.request.session.session_key):
-            self.request.session.create()
+export default class Room extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      votesToSkip: 2,
+      guestCanPause: false,
+      isHost: false,
+    };
+    this.roomCode = this.props.match.params.roomCode;
+    this.getRoomDetails();
+    this.leaveButtonPressed = this.leaveButtonPressed.bind(this);
+  }
 
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            guest_can_pause = serializer.data.get('guest_can_pause')
-            votes_to_skip = serializer.data.get('votes_to_skip')
-            host = self.request.session.session_key
-            queryset = Room.objects.filter(host=host)
-            if queryset.exists():
-                room = queryset[0]
-                room.guest_can_pause = guest_can_pause
-                room.votes_to_skip = votes_to_skip
-                room.save(update_fields=['guest_can_pause', 'votes_to_skip'])
-                return Response(RoomSerializer(room).data, status=status.HTTP_200_OK)
-            else:
-                room = Room(host=host, guest_can_pause=guest_can_pause,
-                            votes_to_skip=votes_to_skip)
-                room.save()
-                return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)
+  getRoomDetails() {
+    return fetch("/api/get-room" + "?code=" + this.roomCode)
+      .then((response) => {
+        if (!response.ok) {
+          this.props.leaveRoomCallback();
+          this.props.history.push("/");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        this.setState({
+          votesToSkip: data.votes_to_skip,
+          guestCanPause: data.guest_can_pause,
+          isHost: data.is_host,
+        });
+      });
+  }
 
-        return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
+  leaveButtonPressed() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/api/leave-room", requestOptions).then((_response) => {
+      this.props.leaveRoomCallback();
+      this.props.history.push("/");
+    });
+  }
+
+  render() {
+    return (
+      <Grid container spacing={1}>
+        <Grid item xs={12} align="center">
+          <Typography variant="h4" component="h4">
+            Code: {this.roomCode}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <Typography variant="h6" component="h6">
+            Votes: {this.state.votesToSkip}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <Typography variant="h6" component="h6">
+            Guest Can Pause: {this.state.guestCanPause.toString()}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <Typography variant="h6" component="h6">
+            Host: {this.state.isHost.toString()}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.leaveButtonPressed}
+          >
+            Leave Room
+          </Button>
+        </Grid>
+      </Grid>
+    );
+  }
+}
