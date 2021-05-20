@@ -1,15 +1,16 @@
-from requests.sessions import session
 from .models import SpotifyToken
 from django.utils import timezone
 from datetime import timedelta
 from .crudentials import CLIENT_ID, CLIENT_SECRET
-from requests import post, get, put
+from requests import post, put, get
+
 
 BASE_URL = "https://api.spotify.com/v1/me/"
 
 
 def get_user_tokens(session_id):
     user_tokens = SpotifyToken.objects.filter(user=session_id)
+
     if user_tokens.exists():
         return user_tokens[0]
     else:
@@ -26,10 +27,10 @@ def update_or_create_user_tokens(session_id, access_token, token_type, expires_i
         tokens.expires_in = expires_in
         tokens.token_type = token_type
         tokens.save(update_fields=['access_token',
-                    'refresh_token', 'expires_in', 'token_type'])
+                                   'refresh_token', 'expires_in', 'token_type'])
     else:
-        tokens = SpotifyToken(
-            user=session_id, access_token=access_token, refresh_token=refresh_token, token_type=token_type, expires_in=expires_in)
+        tokens = SpotifyToken(user=session_id, access_token=access_token,
+                              refresh_token=refresh_token, token_type=token_type, expires_in=expires_in)
         tokens.save()
 
 
@@ -52,7 +53,7 @@ def refresh_spotify_token(session_id):
         'grant_type': 'refresh_token',
         'refresh_token': refresh_token,
         'client_id': CLIENT_ID,
-        'cliend_secret': CLIENT_SECRET
+        'client_secret': CLIENT_SECRET
     }).json()
 
     access_token = response.get('access_token')
@@ -68,6 +69,7 @@ def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
     tokens = get_user_tokens(session_id)
     headers = {'Content-Type': 'application/json',
                'Authorization': "Bearer " + tokens.access_token}
+
     if post_:
         post(BASE_URL + endpoint, headers=headers)
     if put_:

@@ -24,6 +24,7 @@ export default class Room extends Component {
     
   }
 
+
   getRoomDetails() {
     return fetch("/api/get-room" + "?code=" + this.roomCode)
       .then((response) => {
