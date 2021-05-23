@@ -56,7 +56,7 @@ export class RoomJoinPage extends Component {
     roomButtonPressed() {
         const requestOptions = {
             method : "POST",
-            headers : {"Content-Type" : "application/json"},
+            headers : {"Content-Type" : "application/json", 'Accept': 'application/json'},
             body : JSON.stringify({
                 code : this.state.roomCode
             })

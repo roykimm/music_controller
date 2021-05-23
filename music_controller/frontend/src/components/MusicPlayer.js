@@ -12,7 +12,7 @@ export default class MusicPlayer extends Component {
     skipSong() {
         const requestOptions = {
             method : "POST",
-            headers: {"Content-Type": 'application/json'}
+            headers: {"Content-Type": 'application/json','Accept': 'application/json'}
         };
         fetch('/spotify/skip', requestOptions);
     }
@@ -20,7 +20,7 @@ export default class MusicPlayer extends Component {
     pauseSong() {
         const requestOptions = {
             method: 'PUT',
-            headers : {'Content-Type' : 'application/json'},
+            headers : {'Content-Type' : 'application/json','Accept': 'application/json'},
         };
 
         fetch('/spotify/pause', requestOptions);
@@ -29,7 +29,7 @@ export default class MusicPlayer extends Component {
     playSong() {
         const requestOptions = {
             method: 'PUT',
-            headers : {'Content-Type' : 'application/json'},
+            headers : {'Content-Type' : 'application/json','Accept': 'application/json'},
         };
 
         fetch('/spotify/play', requestOptions);
