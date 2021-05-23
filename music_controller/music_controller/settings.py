@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-^lbwlo-86u$fng0&g=brdrro&%*tlr7)%@59jsmxtlo5nv^qk0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'http://gobella.ml',
+                 'ec2-18-222-188-155.us-east-2.compute.amazonaws.com', '18.222.188.155']
 
 
 # Application definition
