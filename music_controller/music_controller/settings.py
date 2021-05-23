@@ -14,20 +14,21 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = '/media/'
-MEDIA_DIR = os.path.join(BASE_DIR, 'media')
-
 STATICFILES_DIRS = [
     STATIC_DIR,
-    MEDIA_DIR,
 ]
+
 STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
+
+# media files
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
 
 
 # Quick-start development settings - unsuitable for production
@@ -95,7 +96,7 @@ WSGI_APPLICATION = 'music_controller.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': Path(__file__).resolve().parent.parent / 'db.sqlite3',
     }
 }
 
