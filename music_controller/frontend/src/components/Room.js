@@ -34,7 +34,12 @@ export default class Room extends Component {
   }
 
   getRoomDetails() {
-    return fetch("/api/get-room" + "?code=" + this.roomCode)
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+
+    return fetch("/api/get-room" + "?code=" + this.roomCode, requestOptions)
       .then((response) => {
         if (!response.ok) {
           this.props.leaveRoomCallback();
@@ -55,13 +60,18 @@ export default class Room extends Component {
   }
 
   authenticateSpotify() {
-    fetch("/spotify/is-authenticated")
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+
+    fetch("/spotify/is-authenticated", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         this.setState({ spotifyAuthenticated: data.status });
         console.log(data.status);
         if (!data.status) {
-          fetch("/spotify/get-auth-url")
+          fetch("/spotify/get-auth-url", requestOptions)
             .then((response) => response.json())
             .then((data) => {
               window.location.replace(data.url);
@@ -71,7 +81,11 @@ export default class Room extends Component {
   }
 
   getCurrentSong() {
-    fetch("/spotify/current-song")
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };  
+    fetch("/spotify/current-song", requestOptions)
       .then((response) => {
         if (!response.ok) {
           return {};
