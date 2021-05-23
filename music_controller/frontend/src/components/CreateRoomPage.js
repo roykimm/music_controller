@@ -53,7 +53,7 @@ export default class CreateRoomPage extends Component {
   handleRoomButtonPressed() {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", 'Accept': 'application/json' },
       body: JSON.stringify({
         votes_to_skip: this.state.votesToSkip,
         guest_can_pause: this.state.guestCanPause,
@@ -67,7 +67,7 @@ export default class CreateRoomPage extends Component {
   handleUpdateButtonPressed() {
     const requestOptions = {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", 'Accept': 'application/json' },
       body: JSON.stringify({
         votes_to_skip: this.state.votesToSkip,
         guest_can_pause: this.state.guestCanPause,
