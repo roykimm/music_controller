@@ -24,7 +24,7 @@ export default class HomePage extends Component {
   async componentDidMount() {
 
     const requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: { "Content-Type": "application/json" },
     };
 
