@@ -22,7 +22,13 @@ export default class HomePage extends Component {
   }
 
   async componentDidMount() {
-    fetch("/api/user-in-room")
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+
+    fetch("/api/user-in-room", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         this.setState({
