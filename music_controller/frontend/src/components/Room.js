@@ -70,7 +70,7 @@ export default class Room extends Component {
         this.setState({ spotifyAuthenticated: data.status });
         console.log(data.status);
         if (!data.status) {
-          fetch("/spotify/get-auth-url")
+          fetch("/spotify/get-auth-url", requestOptions)
             .then((response) => response.json())
             .then((data) => {
               window.location.replace(data.url);
@@ -84,7 +84,6 @@ export default class Room extends Component {
       method : "GET",
       headers : {"Content-Type" : "application/json", 'Accept': 'application/json'},
     };
-
     fetch("/spotify/current-song", requestOptions)
       .then((response) => {
         if (!response.ok) {

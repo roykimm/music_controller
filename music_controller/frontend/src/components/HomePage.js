@@ -22,10 +22,12 @@ export default class HomePage extends Component {
   }
 
   async componentDidMount() {
+
     const requestOptions = {
       method : "GET",
       headers : {"Content-Type" : "application/json", 'Accept': 'application/json'},
     };  
+
     fetch("/api/user-in-room", requestOptions)
       .then((response) => response.json())
       .then((data) => {
