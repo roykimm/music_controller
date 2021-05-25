@@ -13,6 +13,7 @@ django-admin startapp api
 python manage.py makemigrations
 python manage.py migrate
 
+python3 manage.py createsuperuser
 
 django-admin startapp frontend
 cd frontend
