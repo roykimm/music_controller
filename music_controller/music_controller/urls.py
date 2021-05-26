@@ -22,5 +22,6 @@ urlpatterns = [
     path('myfrontend/', include('frontend2.urls')),
     path('', include('frontend.urls')),
     path('spotify/', include('spotify.urls')),
+    path('accounts/', include('accounts.urls')),
 
 ]
